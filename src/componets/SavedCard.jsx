@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import Saveremovedata from "./Saveremovebtn";
 
 export default function SavedCard({ carddata }) {
   return (
@@ -67,28 +69,21 @@ export default function SavedCard({ carddata }) {
 
       {/* <!-- Right: Actions --> */}
       <div className="flex shrink-0 items-center gap-2 sm:ml-4">
-        <button
+        {/* <button
           type="button"
           className="rounded-full border border-[#343a46] px-3.5 py-2 text-[10px] font-medium text-[#e1e4eb] transition hover:border-[#c6ff00] hover:text-white"
         >
           View Details
-        </button>
+        </button> */}
 
-        <button
-          type="button"
-          aria-label="Remove workout"
-          className="ml-0.5 rounded-full p-1 text-[#737b8b] transition hover:bg-[#252a35] hover:text-white"
+        <Link
+          href={`/${carddata.id}`}
+          className="rounded-full border border-[#343a46] px-3.5 py-2 text-[10px] font-medium text-[#e1e4eb] transition hover:border-[#c6ff00] hover:text-white"
         >
-          <svg
-            className="h-3.5 w-3.5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            viewBox="0 0 24 24"
-          >
-            <path d="m18 6-12 12M6 6l12 12" />
-          </svg>
-        </button>
+          View Details
+        </Link>
+
+        <Saveremovedata carddata={carddata} />
       </div>
     </div>
   );

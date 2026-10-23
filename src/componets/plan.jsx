@@ -7,6 +7,7 @@ import Singlecard from "./SingleCard";
 import EmptyDesignSection from "./EmptyDesignSection";
 import TodayCard from "./TodayCard";
 import SavedCard from "./SavedCard";
+import { useState } from "react";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -23,7 +24,6 @@ export default function Plan({ carddata }) {
 
   const displayedList = active === "saved" ? savelist : planlist;
 
-
   const totalMinutes = displayedList.reduce(
     (total, item) => total + Number(item.duration || 0),
     0,
@@ -32,6 +32,18 @@ export default function Plan({ carddata }) {
     (total, item) => total + Number(item.caloriesBurned || 0),
     0,
   );
+
+  const [sortBy, setSortBy] = useState("duration");
+
+  const sortList = (list) => {
+    const field = sortBy === "calories" ? "caloriesBurned" : sortBy;
+
+    return [...list].sort(
+      (a, b) => Number(a[field] || 0) - Number(b[field] || 0),
+    );
+  };
+  const sortedPlanList = sortList(planlist);
+  const sortedSavedList = sortList(savelist);
 
   // const {planlist} = usePlanContext();
   // console.log('dats comes?',planlist);
@@ -96,8 +108,8 @@ export default function Plan({ carddata }) {
           />
 
           <div className="tab-content w-full border-0 p-6">
-            {planlist.length > 0 ? (
-              planlist.map((carddata) => {
+            {sortedPlanList.length > 0 ? (
+              sortedPlanList.map((carddata) => {
                 return <TodayCard carddata={carddata} key={carddata.id} />;
               })
             ) : (
@@ -117,26 +129,36 @@ export default function Plan({ carddata }) {
           />
 
           <div className="tab-content w-full border-0 p-6">
-            {savelist.length > 0 ? (
-              savelist.map((carddata) => {
+            {sortedSavedList.length > 0 ? (
+              sortedSavedList.map((carddata) => {
                 return <SavedCard carddata={carddata} key={carddata.id} />;
               })
             ) : (
               <EmptyDesignSection />
             )}
           </div>
-          <div className="flex items-center gap-3 ms-auto">
-            <label htmlFor="sort" className="text-xs text-[#8b90a0]">
-              Sort By
-            </label>
+          <div className="relative">
             <select
               id="sort"
-              className="rounded-xl border border-[#1c2030] bg-[#10131b] px-4 py-2.5 text-xs  outline-none"
+              value={sortBy}
+              onChange={(event) => setSortBy(event.target.value)}
+              className="appearance-none rounded-xl border border-[#1c2030] bg-[#10131b] py-2.5 pl-4 pr-9 text-xs outline-none"
             >
-              <option>Duration</option>
-              <option>Calories</option>
-              <option>Name</option>
+              <option value="duration">Duration</option>
+              <option value="calories">Calories</option>
+              <option value="rating">Rating</option>
             </select>
+
+            <svg
+              aria-hidden="true"
+              className="pointer-events-none absolute right-3 top-1/2 h-3 w-3 -translate-y-1/2 text-[#8b90a0]"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path d="m7 10 5 5 5-5" />
+            </svg>
           </div>
         </div>
       </div>
