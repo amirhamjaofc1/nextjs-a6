@@ -9,19 +9,6 @@ import { usePlanContext } from "@/context/Plancontext";
 export default function Navbar() {
   const { planlist, savelist, setActive } = usePlanContext();
 
-  //   const { count, setCount } = usePlan();
-  // const pathName = usePathname();
-  //   const links = (
-  //     <>
-  //       <li>
-  //         <Link href="/">Worksout</Link>
-  //       </li>
-  //       <li>
-  //         <Link href="/plan">My Plan</Link>
-  //       </li>
-  //     </>
-  //   );
-
   return (
     <header className="h-[87px] border-b border-[#1b1d22] bg-[#0b0c0f]">
       <nav className="relative mx-auto flex h-full items-center justify-between px-6">
@@ -39,14 +26,12 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Center Navigation */}
         <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-2">
           <Suspense fallback={null}>
             <Navlinks />
           </Suspense>
         </div>
 
-        {/* Right Actions */}
         <div className="flex items-center gap-5 text-xs">
           <Link
             href="/plan"

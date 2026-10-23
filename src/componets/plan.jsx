@@ -63,7 +63,6 @@ export default function Plan({ carddata }) {
           </p>
         </header>
 
-        {/* ---------- Stats card ---------- */}
         <section className="mt-8 grid grid-cols-1 rounded-3xl border border-[#1c2030] bg-[#10131b] px-6 py-6 sm:grid-cols-3 sm:px-0 sm:py-7">
           <div className="py-3 sm:px-[22px] sm:py-0">
             <p className="text-xs text-[#8b90a0]">Exercises</p>
@@ -84,7 +83,6 @@ export default function Plan({ carddata }) {
             </p>
           </div>
         </section>
-        {/* name of each tab group should be unique */}
         <div
           className={[
             "tabs tabs-box mt-8 rounded-xl border border-[#1c2030] bg-[#10131b] p-1",
