@@ -1,0 +1,68 @@
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import Navlinks from "./nav-links";
+// import {usePlan} from "@/context/Plancontext"
+
+export default function Navbar() {
+  //   const { count, setCount } = usePlan();
+  // const pathName = usePathname();
+  //   const links = (
+  //     <>
+  //       <li>
+  //         <Link href="/">Worksout</Link>
+  //       </li>
+  //       <li>
+  //         <Link href="/plan">My Plan</Link>
+  //       </li>
+  //     </>
+  //   );
+
+  return (
+    <header className="h-[87px] border-b border-[#1b1d22] bg-[#0b0c0f]">
+      <nav className="relative mx-auto flex h-full items-center justify-between px-6">
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            className="p-1.5"
+            src="/assets/logo.png"
+            width={50}
+            height={50}
+            alt="logo"
+          ></Image>
+
+          <span className="text-xl font-black tracking-wide text-white">
+            FITLOG
+          </span>
+        </Link>
+
+        {/* Center Navigation */}
+        <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-2">
+          <Navlinks />
+        </div>
+
+        {/* Right Actions */}
+        <div className="flex items-center gap-5 text-xs">
+          <Link
+            href="/plan"
+            className="flex items-center gap-2 text-[#c0c4ce] transition hover:text-white"
+          >
+            <span>Plan</span>
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#c6ff00] text-[11px] font-bold text-black">
+              {0}
+            </span>
+          </Link>
+
+          <Link
+            href="/plan"
+            className="flex items-center gap-2 text-[#a3a8b4] transition hover:text-white"
+          >
+            <span>Saved</span>
+            <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#343740] text-[11px] text-[#c0c4ce]">
+              {0}
+            </span>
+          </Link>
+        </div>
+      </nav>
+    </header>
+  );
+}
