@@ -137,7 +137,7 @@ export default function Plan({ carddata }) {
               <EmptyDesignSection />
             )}
           </div>
-          <div className="relative">
+          <div className="relative ms-auto">
             <select
               id="sort"
               value={sortBy}
