@@ -3,9 +3,10 @@
 import { Inter, Oswald } from "next/font/google";
 
 import { usePlanContext } from "@/context/Plancontext";
-import { useState } from "react";
 import Singlecard from "./SingleCard";
 import EmptyDesignSection from "./EmptyDesignSection";
+import TodayCard from "./TodayCard";
+import SavedCard from "./SavedCard";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -17,12 +18,24 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 // ----------------------------------------------- main desigbb
 
 export default function Plan({ carddata }) {
-  const { planlist, setPlanlist, savelist, setsavelist } = usePlanContext();
+  const { planlist, savelist, setsavelist, active, setActive } =
+    usePlanContext();
+
+  const displayedList = active === "saved" ? savelist : planlist;
+
+
+  const totalMinutes = displayedList.reduce(
+    (total, item) => total + Number(item.duration || 0),
+    0,
+  );
+  const totalCalories = displayedList.reduce(
+    (total, item) => total + Number(item.caloriesBurned || 0),
+    0,
+  );
 
   // const {planlist} = usePlanContext();
   // console.log('dats comes?',planlist);
 
-  const [active, setActive] = useState("plan");
   return (
     <main
       className={`${inter.variable} ${oswald.variable} min-h-screen bg-[#0b0c10] px-6 py-10 font-[family-name:var(--font-inter)] text-white sm:px-10`}
@@ -43,31 +56,33 @@ export default function Plan({ carddata }) {
           <div className="py-3 sm:px-[22px] sm:py-0">
             <p className="text-xs text-[#8b90a0]">Exercises</p>
             <p className="mt-1 font-[family-name:var(--font-oswald)] text-4xl font-bold leading-none text-[#c8f90a]">
-              2
+              {displayedList.length}
             </p>
           </div>
           <div className="border-t border-[#1c2030] py-3 sm:border-l sm:border-t-0 sm:px-[22px] sm:py-0">
             <p className="text-xs text-[#8b90a0]">Minutes</p>
             <p className="mt-1 font-[family-name:var(--font-oswald)] text-4xl font-bold leading-none">
-              23
+              {totalMinutes}
             </p>
           </div>
           <div className="border-t border-[#1c2030] py-3 sm:border-l sm:border-t-0 sm:px-[22px] sm:py-0">
             <p className="text-xs text-[#8b90a0]">Calories</p>
             <p className="mt-1 font-[family-name:var(--font-oswald)] text-4xl font-bold leading-none">
-              190
+              {totalCalories}
             </p>
           </div>
         </section>
         {/* name of each tab group should be unique */}
         <div
-          className="tabs tabs-box mt-8 rounded-xl border border-[#1c2030] bg-[#10131b] p-1
-                [&_.tab]:rounded-lg
-                [&_.tab]:text-xs
-                [&_.tab]:text-[#8b90a0]
-                [&_.tab:checked]:bg-[#c8f90a]
-                [&_.tab:checked]:font-semibold
-                [&_.tab:checked]:text-black"
+          className={[
+            "tabs tabs-box mt-8 rounded-xl border border-[#1c2030] bg-[#10131b] p-1",
+            "[&_.tab]:rounded-lg",
+            "[&_.tab]:text-xs",
+            "[&_.tab]:text-[#8b90a0]",
+            "[&_.tab:checked]:bg-[#c8f90a]",
+            "[&_.tab:checked]:font-semibold",
+            "[&_.tab:checked]:text-black",
+          ].join(" ")}
         >
           <input
             type="radio"
@@ -83,7 +98,7 @@ export default function Plan({ carddata }) {
           <div className="tab-content w-full border-0 p-6">
             {planlist.length > 0 ? (
               planlist.map((carddata) => {
-                return <Singlecard key={carddata.id} carddata={carddata} />;
+                return <TodayCard carddata={carddata} key={carddata.id} />;
               })
             ) : (
               <EmptyDesignSection />
@@ -104,7 +119,7 @@ export default function Plan({ carddata }) {
           <div className="tab-content w-full border-0 p-6">
             {savelist.length > 0 ? (
               savelist.map((carddata) => {
-                return <Singlecard key={carddata.id} carddata={carddata} />;
+                return <SavedCard carddata={carddata} key={carddata.id} />;
               })
             ) : (
               <EmptyDesignSection />

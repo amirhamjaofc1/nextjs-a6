@@ -34,7 +34,7 @@ async function WorkoutDetails({ params }) {
 }
 
 async function getWorkout(cardid) {
-  "use cache";
+  // "use cache";
   const res = await fetch(`https://api.abcz.workers.dev/api/fitlog/${cardid}`);
 
   if (!res.ok) {

@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navlinks from "./nav-links";
@@ -6,7 +7,7 @@ import { usePlanContext } from "@/context/Plancontext";
 // import {usePlan} from "@/context/Plancontext"
 
 export default function Navbar() {
-  const { planlist, savelist } = usePlanContext();
+  const { planlist, savelist, setActive } = usePlanContext();
 
   //   const { count, setCount } = usePlan();
   // const pathName = usePathname();
@@ -40,7 +41,9 @@ export default function Navbar() {
 
         {/* Center Navigation */}
         <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-2">
-          <Navlinks />
+          <Suspense fallback={null}>
+            <Navlinks />
+          </Suspense>
         </div>
 
         {/* Right Actions */}
@@ -49,7 +52,13 @@ export default function Navbar() {
             href="/plan"
             className="flex items-center gap-2 text-[#c0c4ce] transition hover:text-white"
           >
-            <span>Plan</span>
+            <span
+              onClick={() => {
+                setActive("plan");
+              }}
+            >
+              Plan
+            </span>
             <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#c6ff00] text-[11px] font-bold text-black">
               {planlist.length}
             </span>
@@ -59,7 +68,14 @@ export default function Navbar() {
             href="/plan"
             className="flex items-center gap-2 text-[#a3a8b4] transition hover:text-white"
           >
-            <span>Saved</span>
+            <span
+              onClick={() => {
+                setActive("saved");
+              }}
+            >
+              Saved
+            </span>
+
             <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#343740] text-[11px] text-[#c0c4ce]">
               {savelist.length}
             </span>
