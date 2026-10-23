@@ -1,9 +1,11 @@
 "use client";
 
 import { Inter, Oswald } from "next/font/google";
-import Tabactive from "./tabactive";
+
 import { usePlanContext } from "@/context/Plancontext";
 import { useState } from "react";
+import Singlecard from "./SingleCard";
+import EmptyDesignSection from "./EmptyDesignSection";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -14,13 +16,11 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 // ----------------------------------------------- main desigbb
 
-export default function Plan() {
-  // const { planlist, setPlanlist, savelist, setsavelist } = usePlanContext();
+export default function Plan({ carddata }) {
+  const { planlist, setPlanlist, savelist, setsavelist } = usePlanContext();
 
-
-  const {planlist} = usePlanContext();
-  console.log('dats comes?',planlist);
-
+  // const {planlist} = usePlanContext();
+  // console.log('dats comes?',planlist);
 
   const [active, setActive] = useState("plan");
   return (
@@ -75,12 +75,20 @@ export default function Plan() {
             className="tab rounded-lg px-5 text-xs text-[#8b90a0]"
             aria-label="Today's Plan"
             checked={active === "plan"}
-            onChange={() =>{
-              setActive('plan')
+            onChange={() => {
+              setActive("plan");
             }}
           />
 
-          <div className="tab-content w-full border-0 p-6">Tab content 1</div>
+          <div className="tab-content w-full border-0 p-6">
+            {planlist.length > 0 ? (
+              planlist.map((carddata) => {
+                return <Singlecard key={carddata.id} carddata={carddata} />;
+              })
+            ) : (
+              <EmptyDesignSection />
+            )}
+          </div>
 
           <input
             type="radio"
@@ -88,12 +96,20 @@ export default function Plan() {
             className="tab rounded-lg px-5 text-xs text-[#8b90a0]"
             aria-label="Saved"
             checked={active === "saved"}
-            onChange={() =>{
-              setActive('saved')
+            onChange={() => {
+              setActive("saved");
             }}
           />
 
-          <div className="tab-content w-full border-0 p-6">Tab content 2</div>
+          <div className="tab-content w-full border-0 p-6">
+            {savelist.length > 0 ? (
+              savelist.map((carddata) => {
+                return <Singlecard key={carddata.id} carddata={carddata} />;
+              })
+            ) : (
+              <EmptyDesignSection />
+            )}
+          </div>
           <div className="flex items-center gap-3 ms-auto">
             <label htmlFor="sort" className="text-xs text-[#8b90a0]">
               Sort By

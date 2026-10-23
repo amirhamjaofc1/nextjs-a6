@@ -2,9 +2,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import Navlinks from "./nav-links";
+import { usePlanContext } from "@/context/Plancontext";
 // import {usePlan} from "@/context/Plancontext"
 
 export default function Navbar() {
+  const { planlist, savelist } = usePlanContext();
+
   //   const { count, setCount } = usePlan();
   // const pathName = usePathname();
   //   const links = (
@@ -48,7 +51,7 @@ export default function Navbar() {
           >
             <span>Plan</span>
             <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#c6ff00] text-[11px] font-bold text-black">
-              {0}
+              {planlist.length}
             </span>
           </Link>
 
@@ -58,7 +61,7 @@ export default function Navbar() {
           >
             <span>Saved</span>
             <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#343740] text-[11px] text-[#c0c4ce]">
-              {0}
+              {savelist.length}
             </span>
           </Link>
         </div>
